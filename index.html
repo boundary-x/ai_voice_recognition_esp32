@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="https://raw.githubusercontent.com/boundary-x/ai_teachable_machine/refs/heads/main/Favicon.png"/> 
+  <link rel="X-icon" href="https://raw.githubusercontent.com/boundary-x/ai_teachable_machine/refs/heads/main/Favicon.png"/> 
+  <title>바운더리엑스 AI 음성인식</title>
+
+  <!-- External Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.dom.min.js"></script>
+
+  <!-- Pretendard 웹 폰트 적용 -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+
+  <!-- CSS 파일 -->
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <!-- 헤더 -->
+  <header>
+    <div class="title">
+      <img src="https://raw.githubusercontent.com/boundary-x/ai_voice_recognition/refs/heads/main/boundaryx_logo.png" alt="Logo">
+      AI 음성인식
+    </div>
+    <a href="https://boundaryx.io/" class="back-button">돌아가기</a>
+  </header>
+
+  <!-- 메인 컨텐츠 -->
+  <main>
+    <div id="p5-container" class="canvas-container"></div>
+    <section class="controls">
+      <div class="control-group" id="bluetooth-control-group">
+        <h3>📡 블루투스 연결</h3>
+        <p>1️⃣STEP1 - 블루투스 연결 버튼을 클릭해 ESP를 연결해주세요</p>
+        <div id="bluetoothStatus" class="status">상태: Disconnected</div>
+        <div id="bluetooth-control-buttons" class="button-group"></div>
+      </div>
+      <div class="control-group" id="command-table-group">
+        <h3>📋 음성 인식 데이터 표</h3>
+        <p>2️⃣STEP2 - AI를 통해 인식할 수 있는 음성 명령과 데이터를 확인해주세요</p>
+        <div id="command-table-container"></div>
+      </div>
+      <div class="control-group" id="user-command-group">
+        <h3>📝 사용자 음성 명령 추가</h3>
+        <p>3️⃣STEP3 - 나만의 음성 명령과 데이터를 추가할 수 있어요</p>
+        <div id="user-command-ui"></div>
+      </div>
+      <div class="control-group" id="voice-recognition-group">
+        <h3>🎤 음성 인식 제어</h3>
+        <p>4️⃣STEP4 - 음성 인식 시작 버튼을 누른 후 음성 명령을 내려주세요</p>
+        <div id="voice-recognition-ui"></div>
+        <div id="status-container"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 푸터 -->
+  <footer>
+    <p>ⓒ 2024. boundary X Co. All rights reserved.</p>
+  </footer>
+
+  <!-- 스크립트 연결 (DOM 로드 후 실행) -->
+  <script src="sketch.js" defer></script>
+  <script>
+    document.querySelector('.back-button').addEventListener('click', () => {
+      window.history.back();
+    });
+  </script>
+</body>
+</html>
