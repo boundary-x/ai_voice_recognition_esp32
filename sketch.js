@@ -397,7 +397,7 @@ function updateBluetoothStatusUI(type) {
 async function connectBluetooth() {
   try {
     bluetoothDevice = await navigator.bluetooth.requestDevice({
-      filters: [{ namePrefix: "ESP32_Voice" }], // ESP32 이름으로 변경됨
+      filters: [{ namePrefix: "ESP" }], // ESP32 이름으로 변경됨
       optionalServices: [UART_SERVICE_UUID],
     });
     const server = await bluetoothDevice.gatt.connect();
