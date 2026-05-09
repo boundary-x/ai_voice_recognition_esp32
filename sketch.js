@@ -1,14 +1,14 @@
 /**
  * sketch.js
- * Boundary X Voice Controller Logic (ESP32 Version)
+ * Boundary X Voice Controller Logic (ESP32 Version - TX Fixed)
  */
 
 const UART_SERVICE_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
-const UART_TX_CHARACTERISTIC_UUID = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
-const UART_RX_CHARACTERISTIC_UUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+const UART_TX_CHARACTERISTIC_UUID = "6e400002-b5a3-f393-e0a9-e50e24dcca9e"; // 쓰기 전용 통로
+const UART_RX_CHARACTERISTIC_UUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e"; // 읽기 전용 통로
 
 let bluetoothDevice = null;
-let rxCharacteristic = null;
+let rxCharacteristic = null; // 변수명은 유지하지만 내부적으로 TX 채널이 할당됩니다.
 let isConnected = false;
 let bluetoothStatus = "연결 대기 중"; 
 
@@ -392,17 +392,19 @@ function updateBluetoothStatusUI(type) {
 }
 
 // ----------------------------------------------------
-// [수정된 부분] ESP32 블루투스 연결 필터 적용
+// [수정 완료] 데이터 쓰기 전용 채널(TX)로 매핑되었습니다.
 // ----------------------------------------------------
 async function connectBluetooth() {
   try {
     bluetoothDevice = await navigator.bluetooth.requestDevice({
-      filters: [{ namePrefix: "ESP" }], // ESP32 이름으로 변경됨
+      filters: [{ namePrefix: "ESP" }], 
       optionalServices: [UART_SERVICE_UUID],
     });
     const server = await bluetoothDevice.gatt.connect();
     const service = await server.getPrimaryService(UART_SERVICE_UUID);
-    rxCharacteristic = await service.getCharacteristic(UART_RX_CHARACTERISTIC_UUID);
+    
+    // RX_CHARACTERISTIC 에서 TX_CHARACTERISTIC 으로 수정되어 정상적으로 전송됩니다.
+    rxCharacteristic = await service.getCharacteristic(UART_TX_CHARACTERISTIC_UUID);
     isConnected = true;
     
     bluetoothStatus = `${bluetoothDevice.name} 연결됨`;
